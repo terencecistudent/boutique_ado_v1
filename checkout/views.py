@@ -3,6 +3,9 @@ from django.contrib import messages
 
 from .forms import OrderForm
 
+import os
+import env
+
 
 def checkout(request):
     bag = request.session.get('bag', {})
@@ -14,6 +17,8 @@ def checkout(request):
     template = 'checkout/checkout.html'
     context = {
         'order_form': order_form,
+        'stripe_public_key': os.getenv('STRIPE_PUBLIC_KEY'),
+        'client_secret': 'test client secret',
     }
 
     return render(request, template, context)
